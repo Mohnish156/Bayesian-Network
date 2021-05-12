@@ -1,10 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Parser {
 
-    private double[][] data = new double[200][13];
+    private ArrayList<Email> class0 = new ArrayList<>();
+    private ArrayList<Email> class1 = new ArrayList<>();
+
 
     public Parser() { }
 
@@ -12,16 +15,28 @@ public class Parser {
     public void ParseData(File file) throws FileNotFoundException {
 
         Scanner scanner = new Scanner(file);
-
-        for(int i=0; i<200;i++ ){
-            for(int j=0; j<13;j++){
-                data[i][j] = scanner.nextDouble();
+        while (scanner.hasNextLine()) {
+            double[] feature = new double[12];
+            double Class;
+            for (int i=0; i<12; i++) {
+                feature[i] = scanner.nextDouble();
             }
+            Class = scanner.nextInt();
+            Email email = new Email(feature,Class);
+            if(Class==0) class0.add(email);
+            else class1.add(email);
+            scanner.nextLine();
         }
+
     }
 
+    public ArrayList<Email> getClass0() {
+        return class0;
+    }
 
-    public double[][] getData() {
-        return data;
+    public ArrayList<Email> getClass1() {
+        return class1;
     }
 }
+
+
