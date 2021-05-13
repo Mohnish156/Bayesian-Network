@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class NaiveBayes {
 
@@ -25,15 +22,13 @@ public class NaiveBayes {
         NaiveBayesAlgo();
     }
 
-
-
     private void NaiveBayesAlgo(){
 
         ArrayList<Integer> spamOrNot = new ArrayList<>();
         for(Email email : testEmails){
 
-            ArrayList<Double> class1Probs = calculateFeatureProb(Class1);
-            ArrayList<Double> class0Probs = calculateFeatureProb(Class0);
+            double[] class1Probs = getFeatureProb(Class1);
+            double[] class0Probs = getFeatureProb(Class0);
 
             double probTrue =  Class1.size()/200.0;
             double probFalse =  Class0.size()/200.0;
@@ -41,12 +36,12 @@ public class NaiveBayes {
             for(int i=0; i<email.getFeatures().length; i++){
 
                 if(email.getFeatures()[i] == 1){
-                    probTrue = probTrue * class1Probs.get(i);
-                    probFalse = probFalse * class0Probs.get(i);
+                    probTrue = probTrue * class1Probs[i];
+                    probFalse = probFalse * class0Probs[i];
                 }else{
 
-                    double not0Prob = 1-class0Probs.get(i);
-                    double not1prob = 1-class1Probs.get(i);
+                    double not0Prob = 1-class0Probs[i];
+                    double not1prob = 1-class1Probs[i];
                     probTrue = probTrue * (not1prob);
                     probFalse = probFalse * (not0Prob);
                 }
@@ -64,25 +59,20 @@ public class NaiveBayes {
 
     }
 
-    private ArrayList<Double> calculateFeatureProb(ArrayList<Email> emails){
-        ArrayList<Double> probabilities = new ArrayList<>();
+    private double[] getFeatureProb(ArrayList<Email> emails){
+        double[] probabilities = new double[12];
         double[] countFeature = new double[12];
         for(Email email : emails){
-            for(int i = 0; i<12;i++){
-                ArrayList<Double> features = new ArrayList<Double>();
-                for(double num : email.getFeatures()){
-                    features.add(num);
-                }
-                countFeature[i] += features.get(i);
+            for(int i = 0; i<email.getFeatures().length;i++){
+                countFeature[i] += email.getFeatures()[i];
             }
         }
         for(int i = 0; i<countFeature.length; i++){
             double featureProb = (countFeature[i]/emails.size());
-            probabilities.add(featureProb);
+            probabilities[i]=(featureProb);
         }
         return probabilities;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         new NaiveBayes();
