@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Parser {
 
-    private ArrayList<Email> class0 = new ArrayList<>();
-    private ArrayList<Email> class1 = new ArrayList<>();
-    private ArrayList<Email> testEmails = new ArrayList<>();
-    private ArrayList<Email> trainingEmails = new ArrayList<>();
+    private final ArrayList<Email> class0 = new ArrayList<>();
+    private final ArrayList<Email> class1 = new ArrayList<>();
+    private final ArrayList<Email> testEmails = new ArrayList<>();
+    private final ArrayList<Email> trainingEmails = new ArrayList<>();
 
     public Parser() { }
 

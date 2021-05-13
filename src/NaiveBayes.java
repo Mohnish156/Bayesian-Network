@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 public class NaiveBayes {
 
+    private final ArrayList<Email> Class0;
+    private final ArrayList<Email> Class1;
+    private final ArrayList<Email> testEmails;
 
-
-    private ArrayList<Email> Class0;
-    private ArrayList<Email> Class1;
-    private ArrayList<Email> testEmails = new ArrayList<>();
     public NaiveBayes() throws FileNotFoundException {
 
         Parser parser = new Parser();
@@ -27,8 +26,8 @@ public class NaiveBayes {
         ArrayList<Integer> spamOrNot = new ArrayList<>();
         for(Email email : testEmails){
 
-            double[] class1Probs = getFeatureProb(Class1);
-            double[] class0Probs = getFeatureProb(Class0);
+            double[] class1Probabilities = getFeatureProb(Class1);
+            double[] class0Probabilities = getFeatureProb(Class0);
 
             double probTrue =  Class1.size()/200.0;
             double probFalse =  Class0.size()/200.0;
@@ -36,12 +35,12 @@ public class NaiveBayes {
             for(int i=0; i<email.getFeatures().length; i++){
 
                 if(email.getFeatures()[i] == 1){
-                    probTrue = probTrue * class1Probs[i];
-                    probFalse = probFalse * class0Probs[i];
+                    probTrue = probTrue * class1Probabilities[i];
+                    probFalse = probFalse * class0Probabilities[i];
                 }else{
 
-                    double not0Prob = 1-class0Probs[i];
-                    double not1prob = 1-class1Probs[i];
+                    double not0Prob = 1-class0Probabilities[i];
+                    double not1prob = 1-class1Probabilities[i];
                     probTrue = probTrue * (not1prob);
                     probFalse = probFalse * (not0Prob);
                 }
@@ -62,9 +61,10 @@ public class NaiveBayes {
     private double[] getFeatureProb(ArrayList<Email> emails){
         double[] probabilities = new double[12];
         double[] countFeature = new double[12];
-        for(Email email : emails){
-            for(int i = 0; i<email.getFeatures().length;i++){
-                countFeature[i] += email.getFeatures()[i];
+
+        for(int i = 0; i<emails.size();i++){
+            for(int j = 0; j<emails.get(i).getFeatures().length;j++){
+                countFeature[j] += emails.get(i).getFeatures()[j];
             }
         }
         for(int i = 0; i<countFeature.length; i++){
