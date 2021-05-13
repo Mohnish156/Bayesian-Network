@@ -2,9 +2,9 @@ public class Email {
     private double emailClass;
     private double[] Features;
 
-    public Email(double[] features, double Class) {
+    public Email(double[] features) {
         Features = features;
-        emailClass = Class;
+       // emailClass = Class;
 
     }
 
@@ -14,5 +14,9 @@ public class Email {
 
     public double[] getFeatures() {
         return Features;
+    }
+
+    public void setEmailClass(double emailClass) {
+        this.emailClass = emailClass;
     }
 }
