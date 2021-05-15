@@ -8,13 +8,11 @@ public class NaiveBayes {
     private final ArrayList<Email> Class1;
     private final ArrayList<Email> testEmails;
 
-    public NaiveBayes() throws FileNotFoundException {
+    public NaiveBayes(File training, File test) throws FileNotFoundException {
 
         Parser parser = new Parser();
-        File trainingFile = new File("data/spamLabelled.dat");
-        File testFile = new File("data/spamUnlabelled.dat");
-        parser.parseTrainingData(trainingFile);
-        parser.parseTestData(testFile);
+        parser.parseTrainingData(training);
+        parser.parseTestData(test);
         Class0 = parser.getClass0();
         Class1 = parser.getClass1();
         testEmails = parser.getTestEmails();
@@ -35,14 +33,14 @@ public class NaiveBayes {
             for(int i=0; i<email.getFeatures().length; i++){
 
                 if(email.getFeatures()[i] == 1){
-                    probTrue = probTrue * class1Probabilities[i];
-                    probFalse = probFalse * class0Probabilities[i];
+                    probTrue *= class1Probabilities[i];
+                    probFalse *= class0Probabilities[i];
                 }else{
 
                     double not0Prob = 1-class0Probabilities[i];
                     double not1prob = 1-class1Probabilities[i];
-                    probTrue = probTrue * (not1prob);
-                    probFalse = probFalse * (not0Prob);
+                    probTrue *= (not1prob);
+                    probFalse *= (not0Prob);
                 }
             }
             if(probTrue > probFalse){
@@ -75,7 +73,11 @@ public class NaiveBayes {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        new NaiveBayes();
+        String trainingFile = args[0];
+        String testFile = args[1];
+        File training = new File(trainingFile);
+        File test = new File(testFile);
+        new NaiveBayes(training,test);
 
     }
 
