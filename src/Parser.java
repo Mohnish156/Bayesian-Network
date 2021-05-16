@@ -23,7 +23,7 @@ public class Parser {
             for (int i=0; i<12; i++) {
                 feature[i] = scanner.nextDouble();
             }
-            Class = scanner.nextInt();
+            Class = scanner.nextDouble();
             Email email = new Email(feature);
             email.setEmailClass(Class);
             if(Class==0) class0.add(email);
@@ -47,7 +47,6 @@ public class Parser {
             Email email = new Email(feature);
             testEmails.add(email);
             scanner.nextLine();
-
         }
 
     }

@@ -1,11 +1,11 @@
+import java.util.ArrayList;
+
 public class Email {
     private double emailClass;
     private double[] Features;
 
     public Email(double[] features) {
         Features = features;
-       // emailClass = Class;
-
     }
 
     public double getEmailClass() {
@@ -19,4 +19,6 @@ public class Email {
     public void setEmailClass(double emailClass) {
         this.emailClass = emailClass;
     }
+
+
 }
